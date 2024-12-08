@@ -1,8 +1,15 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./chat.css";
 
 export default function Chat() {
   const [text, setText] = useState("");
+  const endRef = useRef();
+  useEffect(() => {
+    endRef.current?.scrollIntoView({
+      // behavior: "smooth",
+    });
+  }, []);
+
   return (
     <div className="chat">
       <div className="top">
@@ -56,6 +63,7 @@ export default function Chat() {
             <span>1 min ago</span>
           </div>
         </div>
+        <div ref={endRef} />
       </div>
       <div className="bottom">
         <div className="icons">
