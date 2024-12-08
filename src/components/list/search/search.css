@@ -1,0 +1,36 @@
+.search {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+
+  .searchBar {
+    display: flex;
+    background-color: var(--bg-color);
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    border-radius: 10px;
+    padding: 10px;
+
+    input {
+      background-color: transparent;
+      border: none;
+      outline: none;
+      flex: 1;
+      color: inherit;
+    }
+    img {
+      width: 20px;
+      height: 20px;
+    }
+  }
+  .add {
+    width: 36px;
+    height: 36px;
+    background-color: var(--bg-color);
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
+  }
+}
