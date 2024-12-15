@@ -1,8 +1,6 @@
-import { useState } from "react";
 import "./search.css";
 
-export default function Search() {
-  const [addMode, setAddMode] = useState(false);
+export default function Search({ addMode, setAddMode }) {
   return (
     <div className="search">
       <div className="searchBar">
