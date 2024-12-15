@@ -1,12 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import "./chat.css";
+import EmojiPicker from "emoji-picker-react";
 
 export default function Chat() {
   const [text, setText] = useState("");
+  const [isOpenEmojiPicker, setIsOpenEmojiPicker] = useState(false);
   const endRef = useRef();
   useEffect(() => {
     endRef.current?.scrollIntoView({
-      // behavior: "smooth",
+      behavior: "smooth",
     });
   }, []);
 
@@ -77,9 +79,27 @@ export default function Chat() {
           value={text}
           onChange={(e) => setText(e.target.value)}
         />
-        <img src="emoji.png" alt="emoji" />
-        {/* <div className="emoji">
-        </div> */}
+        <div className="emoji">
+          <img
+            src="emoji.png"
+            alt="emoji"
+            onClick={() => setIsOpenEmojiPicker((p) => !p)}
+          />
+          <div className="picker">
+            <EmojiPicker
+              open={isOpenEmojiPicker}
+              searchDisabled
+              skinTonesDisabled
+              previewConfig={{
+                showPreview: false,
+              }}
+              onEmojiClick={(e) => {
+                setText((p) => p + e.emoji);
+                setIsOpenEmojiPicker(false);
+              }}
+            />
+          </div>
+        </div>
         <button className="sendButton">Send</button>
       </div>
     </div>

@@ -131,6 +131,15 @@
       border-radius: 10px;
     }
 
+    .emoji {
+      position: relative;
+      .picker {
+        position: absolute;
+        bottom: 50px;
+        left: 0;
+      }
+    }
+
     .sendButton {
       background-color: #5183fe;
       border: none;
