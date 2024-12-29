@@ -13,6 +13,7 @@
     padding: 1rem;
     cursor: pointer;
     border-bottom: 1px solid #dddddd35;
+    border-radius: 5px;
 
     img {
       width: 50px;

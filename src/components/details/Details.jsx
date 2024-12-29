@@ -1,12 +1,26 @@
+import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore";
+import { useChatStore } from "../../lib/chatStore";
+import { auth, db } from "../../lib/firebase";
 import "./details.css";
+import { useUserStore } from "../../lib/userStore";
 
 export default function Details() {
+  const { currentUser } = useUserStore();
+  const { user, changeBlock, isReceiverBlocked } = useChatStore();
+
+  const handleBlock = () => {
+    updateDoc(doc(db, "users", currentUser.id), {
+      blocked: isReceiverBlocked ? arrayRemove(user.id) : arrayUnion(user.id),
+    });
+    changeBlock();
+  };
+
   return (
     <div className="details">
       <div className="user">
         <img src="avatar.png" alt="avatar" />
         <div className="texts">
-          <span>John Doe</span>
+          <span>{user.username} </span>
           <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
         </div>
       </div>
@@ -58,8 +72,12 @@ export default function Details() {
             <img src="arrowUp.png" alt="arrow up" />
           </div>
         </div>
-        <button>Block User</button>
-        <button className="logout">Logout</button>
+        <button onClick={handleBlock}>
+          {isReceiverBlocked ? "Unblock User" : "Block User"}
+        </button>
+        <button className="logout" onClick={() => auth.signOut()}>
+          Logout
+        </button>
       </div>
     </div>
   );

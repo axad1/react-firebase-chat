@@ -5,26 +5,34 @@ import Login from "./components/login/Login";
 import { useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./lib/firebase";
+import { useUserStore } from "./lib/userStore";
+import { useChatStore } from "./lib/chatStore";
 
 const App = () => {
-  const user = false;
+  const { currentUser, loading, fetchUser } = useUserStore();
+  const { chatId } = useChatStore();
 
   useEffect(() => {
-    const unSub = onAuthStateChanged(auth, (res) => {
-      console.log("user => ", res.user);
+    const unSub = onAuthStateChanged(auth, (user) => {
+      console.log("user => ", user);
+      fetchUser(user?.uid);
     });
 
     return unSub;
-  }, []);
+  }, [fetchUser]);
+
+  if (loading) {
+    return <p className="loading">Loading...</p>;
+  }
 
   return (
     <>
       <div className="container">
-        {user ? (
+        {currentUser ? (
           <>
             <List />
-            <Chat />
-            <Details />
+            {chatId && <Chat />}
+            {chatId && <Details />}
           </>
         ) : (
           <Login />

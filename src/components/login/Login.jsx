@@ -7,13 +7,15 @@ import {
 } from "firebase/auth";
 import { auth, db } from "../../lib/firebase";
 import { doc, setDoc } from "firebase/firestore";
+import { useUserStore } from "../../lib/userStore";
 
 export default function Login() {
-  const [loading, setLoading] = useState(false);
   const [avatar, setAvatar] = useState({
     file: null,
     url: "",
   });
+
+  const { currentUser, loading, fetchUser, setLoading } = useUserStore();
 
   const handleChangeAvatar = (e) => {
     const file = e.target.files[0];
@@ -60,10 +62,10 @@ export default function Login() {
         blocked: [],
       });
 
-      await setDoc(doc(db, "chats", user.uid), { chats: [] });
+      await setDoc(doc(db, "userChats", user.uid), { chats: [] });
 
       console.log("user =. ", user);
-      toast.success("Account created successfully!");
+      toast.success("User registered successfully!");
     } catch (error) {
       console.log(error);
       toast.error(error.message);
